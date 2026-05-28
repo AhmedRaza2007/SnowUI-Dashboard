@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnowUI Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1C1C1C',
+                            card: '#282828',
+                            sidebar: '#1C1C1C',
+                            border: '#333333',
+                            text: '#FFFFFF',
+                            muted: '#A0A0A0'
+                        },
+                        brand: {
+                            blue: '#4D96FF',
+                            purple: '#A155B9',
+                            green: '#27AE60',
+                            red: '#EB5757'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body class="custom-scrollbar opacity-0 animate-fadeIn">
+    <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-dark-sidebar border-r border-dark-border transition-transform -translate-x-full lg:translate-x-0 z-50">
+        <div class="p-6">
+            <div class="mb-8 pt-4">
+                <img src="./img/SnowUI Logo (1).svg" alt="SnowUI Logo">
+            </div>
+
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-brand-blue bg-white/5 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a11 11 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-dark-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span>eCommerce</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-dark-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z"></path></svg>
+                    <span>Projects</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-dark-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span>User Profile</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-dark-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span>Account</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="absolute bottom-6 left-6 right-6">
+            <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
+                <div class="w-10 h-10 bg-gray-500 rounded-full overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name=ByeWind&background=random" alt="User">
+                </div>
+                <div>
+                    <div class="text-sm font-medium">ByeWind</div>
+                    <div class="text-xs text-dark-muted">@byewind</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 p-4 lg:p-8 min-h-screen">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div class="flex items-center gap-4">
+                <button id="sidebarToggle" class="lg:hidden p-2 hover:bg-white/5 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+                <div class="flex items-center gap-2 text-dark-muted text-sm">
+                    <span>Dashboards</span>
+                    <span>/</span>
+                    <span class="text-white">Overview</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-dark-muted">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                    <input type="text" placeholder="Search" class="bg-white/5 border border-dark-border rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-brand-blue transition-all w-full md:w-64">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="p-2 hover:bg-white/5 rounded-lg text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 000 14 7 7 0 000-14z"></path></svg></button>
+                    <button class="p-2 hover:bg-white/5 rounded-lg text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
+                    <button class="p-2 hover:bg-white/5 rounded-lg text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-brand-blue/20 p-6 rounded-2xl border border-brand-blue/30 backdrop-blur-sm transform transition-all hover:scale-[1.02] cursor-pointer">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-medium text-white/80">Views</span>
+                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                </div>
+                <div class="flex items-end justify-between">
+                    <div class="text-2xl font-bold">7,265</div>
+                    <div class="text-xs text-white/60">+11.01%</div>
+                </div>
+            </div>
+            <div class="bg-white/5 p-6 rounded-2xl border border-dark-border transform transition-all hover:scale-[1.02] cursor-pointer">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-medium text-dark-muted">Visits</span>
+                    <svg class="w-5 h-5 text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                </div>
+                <div class="flex items-end justify-between">
+                    <div class="text-2xl font-bold">3,671</div>
+                    <div class="text-xs text-dark-muted">-0.03%</div>
+                </div>
+            </div>
+            <div class="bg-brand-blue p-6 rounded-2xl shadow-lg shadow-brand-blue/20 transform transition-all hover:scale-[1.02] cursor-pointer">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-medium text-white">New Users</span>
+                    <svg class="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                </div>
+                <div class="flex items-end justify-between">
+                    <div class="text-2xl font-bold text-white">256</div>
+                    <div class="text-xs text-white/80">+15.03%</div>
+                </div>
+            </div>
+            <div class="bg-white/5 p-6 rounded-2xl border border-dark-border transform transition-all hover:scale-[1.02] cursor-pointer">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-medium text-dark-muted">Active Users</span>
+                    <svg class="w-5 h-5 text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                </div>
+                <div class="flex items-end justify-between">
+                    <div class="text-2xl font-bold">2,318</div>
+                    <div class="text-xs text-dark-muted">+6.08%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+            <div class="lg:col-span-12 bg-white/5 p-6 rounded-2xl border border-dark-border">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <div class="flex items-center gap-6">
+                        <button class="text-sm font-medium text-brand-purple border-b-2 border-brand-purple pb-1">Users</button>
+                        <button class="text-sm font-medium text-dark-muted hover:text-white transition-colors">Projects</button>
+                        <button class="text-sm font-medium text-dark-muted hover:text-white transition-colors">Operating Status</button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select class="bg-white/5 border border-dark-border rounded-lg px-3 py-1.5 text-xs text-dark-muted focus:outline-none">
+                            <option>Week</option>
+                            <option>Month</option>
+                            <option>Year</option>
+                        </select>
+                        <button class="p-1.5 hover:bg-white/5 rounded-lg text-dark-muted border border-dark-border">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="h-[300px] w-full">
+                    <canvas id="userChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white/5 p-6 rounded-2xl border border-dark-border relative overflow-hidden">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="font-medium text-brand-blue">Device Traffic</h3>
+                    <button class="text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+                <div class="relative h-[200px] w-full">
+                    <div class="absolute top-2 right-[20%] bg-dark-card border border-dark-border px-2 py-1 rounded text-[10px] text-white z-10 shadow-lg">243K</div>
+                    <canvas id="deviceChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white/5 p-6 rounded-2xl border border-dark-border">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="font-medium text-brand-green">Location Traffic</h3>
+                    <button class="text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+                <div class="h-[200px] w-full">
+                    <canvas id="locationChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white/5 p-6 rounded-2xl border border-dark-border mb-8">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="font-medium text-brand-red">Product Traffic</h3>
+                <div class="flex items-center gap-4 text-xs">
+                    <div class="flex items-center gap-1.5 text-dark-muted"><span class="w-2 h-2 rounded-full bg-white/40"></span> All</div>
+                    <div class="flex items-center gap-1.5 text-dark-muted"><span class="w-2 h-2 rounded-full bg-brand-blue"></span> SnowUI</div>
+                    <div class="flex items-center gap-1.5 text-dark-muted"><span class="w-2 h-2 rounded-full bg-brand-purple"></span> Dashboard</div>
+                    <button class="text-dark-muted ml-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+            </div>
+            <div class="h-[300px] w-full">
+                <canvas id="productChart"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white/5 rounded-2xl border border-dark-border overflow-hidden mb-8">
+            <div class="p-6 border-b border-dark-border flex items-center justify-between">
+                <h3 class="font-medium text-brand-blue">Projects</h3>
+                <button class="text-dark-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-white/5 text-dark-muted uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-4 font-medium">Manager</th>
+                            <th class="px-6 py-4 font-medium">Date</th>
+                            <th class="px-6 py-4 font-medium">Amount</th>
+                            <th class="px-6 py-4 font-medium">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-dark-border">
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=ByeWind" class="w-8 h-8 rounded-full">
+                                    <span>ByeWind</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-dark-muted">Jun 24, 2026</td>
+                            <td class="px-6 py-4">$942.00</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 bg-brand-purple/20 text-brand-purple text-xs rounded-full">In Progress</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Natali+Craig" class="w-8 h-8 rounded-full">
+                                    <span>Natali Craig</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-dark-muted">Mar 10, 2026</td>
+                            <td class="px-6 py-4">$881.00</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 bg-brand-green/20 text-brand-green text-xs rounded-full">Complete</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Drew+Cano" class="w-8 h-8 rounded-full">
+                                    <span>Drew Cano</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-dark-muted">Nov 10, 2026</td>
+                            <td class="px-6 py-4">$409.00</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 bg-brand-blue/20 text-brand-blue text-xs rounded-full">Pending</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Orlando+Diggs" class="w-8 h-8 rounded-full">
+                                    <span>Orlando Diggs</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-dark-muted">Dec 20, 2026</td>
+                            <td class="px-6 py-4">$953.00</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 bg-yellow-500/20 text-yellow-500 text-xs rounded-full">Approved</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Andi+Lane" class="w-8 h-8 rounded-full">
+                                    <span>Andi Lane</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-dark-muted">Jul 25, 2026</td>
+                            <td class="px-6 py-4">$907.00</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 bg-red-500/20 text-red-500 text-xs rounded-full">Rejected</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-dark-muted pb-8">
+            <div>© 2026 SnowUI</div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-white transition-colors">About</a>
+                <a href="#" class="hover:text-white transition-colors">Support</a>
+                <a href="#" class="hover:text-white transition-colors">Contact Us</a>
+            </div>
+        </footer>
+    </main>
+
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+    <script src="main.js"></script>
+</body>
+</html>
