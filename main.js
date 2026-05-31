@@ -1,4 +1,3 @@
-        // Sidebar Toggle Logic
         const sidebar = document.getElementById('sidebar');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const overlay = document.getElementById('overlay');
@@ -13,13 +12,11 @@
             overlay.classList.add('hidden');
         });
 
-        // Charts Implementation
         const ctxUser = document.getElementById('userChart').getContext('2d');
         const ctxDevice = document.getElementById('deviceChart').getContext('2d');
         const ctxLocation = document.getElementById('locationChart').getContext('2d');
         const ctxProduct = document.getElementById('productChart').getContext('2d');
 
-        // Common Chart Options
         const commonOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -38,7 +35,6 @@
             }
         };
 
-        // User Chart (Line)
         new Chart(ctxUser, {
             type: 'line',
             data: {
@@ -75,7 +71,6 @@
             }
         });
 
-        // Device Traffic (Bar)
         new Chart(ctxDevice, {
             type: 'bar',
             data: {
@@ -99,7 +94,6 @@
             }
         });
 
-        // Location Traffic (Bar)
         new Chart(ctxLocation, {
             type: 'bar',
             data: {
@@ -121,7 +115,6 @@
             }
         });
 
-        // Product Traffic (Stacked Bar)
         new Chart(ctxProduct, {
             type: 'bar',
             data: {
